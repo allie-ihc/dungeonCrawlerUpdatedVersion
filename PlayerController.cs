@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     private bool amMoving = false;
     public bool amAtMiddleOfRoom = false;
-
+    private string exitUsed;
     private void turnOffExits()
     {
         this.frontExit.gameObject.SetActive(false);
@@ -24,10 +24,22 @@ public class PlayerController : MonoBehaviour
     }
     private void turnOnExits()
     {
-        this.frontExit.gameObject.SetActive(true);
-        this.backExit.gameObject.SetActive(true);
-        this.leftExit.gameObject.SetActive(true);
-        this.rightExit.gameObject.SetActive(true);
+        if(MySingleton.frontExitEnabled)
+        {
+            this.frontExit.gameObject.SetActive(true);
+        }
+        if(MySingleton.backExitEnabled)
+        {
+            this.backExit.gameObject.SetActive(true);
+        }
+        if(MySingleton.leftExitEnabled)
+        {
+            this.leftExit.gameObject.SetActive(true);
+        }
+        if(MySingleton.rightExitEnabled)
+        {
+            this.rightExit.gameObject.SetActive(true);
+        }
     }
     void Start()
     {
@@ -38,23 +50,20 @@ public class PlayerController : MonoBehaviour
             if(MySingleton.currentDirection.Equals("front"))
             {
                 this.gameObject.transform.position = this.backExit.transform.position;
-                this.amAtMiddleOfRoom = false;
             } 
             else if(MySingleton.currentDirection.Equals("right"))
             {
                 this.gameObject.transform.position = this.leftExit.transform.position;
-                this.amAtMiddleOfRoom = false;
             }
             else if(MySingleton.currentDirection.Equals("back"))
             {
                 this.gameObject.transform.position = this.frontExit.transform.position;
-                this.amAtMiddleOfRoom = false;
             }
             else if(MySingleton.currentDirection.Equals("left"))
             {
                 this.gameObject.transform.position = this.rightExit.transform.position;
-                this.amAtMiddleOfRoom = false;
             }
+            this.amAtMiddleOfRoom = false;
         }
        // MySingleton.currentDirection = " ";
     }
@@ -77,33 +86,37 @@ public class PlayerController : MonoBehaviour
         {
             amMoving = false;
             MySingleton.currentDirection = " ";
-        }
-        if (Input.GetKeyUp(KeyCode.W) && !this.amMoving)
+        } 
+        if (Input.GetKeyUp(KeyCode.W) && !this.amMoving && MySingleton.frontExitEnabled)
         {
+            MySingleton.nextEnter = "front";
             this.amMoving = true;
             this.turnOnExits();
             MySingleton.currentDirection = "front";
 
             this.amAtMiddleOfRoom = false;
         }
-        if (Input.GetKeyUp(KeyCode.A) && !this.amMoving)
+        if (Input.GetKeyUp(KeyCode.A) && !this.amMoving && MySingleton.leftExitEnabled)
         {
+            MySingleton.nextEnter = "left";
             this.amMoving = true;
             this.turnOnExits();
             MySingleton.currentDirection = "left";
 
             this.amAtMiddleOfRoom = false;
             }
-        if (Input.GetKeyUp(KeyCode.S) && !this.amMoving)
+        if (Input.GetKeyUp(KeyCode.S) && !this.amMoving && MySingleton.backExitEnabled)
         {
+            MySingleton.nextEnter = "back";
             this.amMoving = true;
             this.turnOnExits();
             MySingleton.currentDirection = "back";
 
             this.amAtMiddleOfRoom = false;
             }
-        if (Input.GetKeyUp(KeyCode.D) && !this.amMoving)
+        if (Input.GetKeyUp(KeyCode.D) && !this.amMoving && MySingleton.rightExitEnabled)
         {
+            MySingleton.nextEnter = "right";
             this.amMoving = true;
             this.turnOnExits();
             MySingleton.currentDirection = "right";
