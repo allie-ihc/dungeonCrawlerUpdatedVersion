@@ -15,8 +15,32 @@ public class DungeonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Room r = new Room("a room", MySingleton.nextEnter);
-        if(r.getLeftExitEnabled() == false)
+        Room r;
+        if (MySingleton.numRooms == 0)
+        {
+            r = new Room("room" + MySingleton.numRooms.ToString(), MySingleton.nextEnter, " ");
+            enableExits(r);
+            MySingleton.addRoom(r);
+
+        }
+        else if (MySingleton.loadRoom(MySingleton.rooms[MySingleton.currentRoom]) == null)
+        {
+            r = new Room("room" + MySingleton.numRooms.ToString(), MySingleton.nextEnter, MySingleton.rooms[MySingleton.numRooms - 1].getName());
+            enableExits(r);
+            MySingleton.addRoom(r);
+        }
+        else if (MySingleton.loadRoom(MySingleton.rooms[MySingleton.currentRoom]) != null)
+        {
+            r = MySingleton.loadRoom(MySingleton.rooms[MySingleton.currentRoom]);
+            enableExits(r);
+        }
+
+
+    }
+
+    private void enableExits(Room r)
+    {
+        if (r.getLeftExitEnabled() == false)
         {
             leftDoor.SetActive(false);
             MySingleton.leftExitEnabled = false;
@@ -64,11 +88,5 @@ public class DungeonController : MonoBehaviour
             MySingleton.backExitEnabled = true;
             backBlocked.SetActive(false);
         }
-        MySingleton.addRoom(r);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

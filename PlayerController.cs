@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     private bool amMoving = false;
     public bool amAtMiddleOfRoom = false;
-    private string exitUsed;
     private void turnOffExits()
     {
         this.frontExit.gameObject.SetActive(false);

@@ -8,28 +8,36 @@ public class Room
     private int numExits;
     //left, right, front, back
     private bool[] exitsEnabled = new bool[4];
-    public Room (string name, string mustIncludeExit)
+    private string enterToOtherRoom = " ";
+    private string enterRoom = " ";
+    public Room (string name, string mustIncludeExit, string mustIncludeExitLeadsTo)
     {
         this.name = name;
         this.numExits = Random.Range(1, 4);
         if(mustIncludeExit != " ")
         {
-            if(mustIncludeExit.Equals("left"))
+            if(mustIncludeExit.Equals("right"))
             {
                 exitsEnabled[0] = true;
+                enterToOtherRoom = "left";
             }
-            else if(mustIncludeExit.Equals("right"))
+            else if(mustIncludeExit.Equals("left"))
             {
                 exitsEnabled[1] = true;
-            }
-            else if(mustIncludeExit.Equals("front"))
-            {
-                exitsEnabled[2] = true;
+                enterToOtherRoom = "right";
             }
             else if(mustIncludeExit.Equals("back"))
             {
-                exitsEnabled[3] = true;
+                exitsEnabled[2] = true;
+                enterToOtherRoom = "front";
             }
+            else if(mustIncludeExit.Equals("front"))
+            {
+                exitsEnabled[3] = true;
+                enterToOtherRoom = "back";
+            }
+            enterRoom = mustIncludeExitLeadsTo;
+            numExits--;
         }
         for(int i = 0; i < numExits; i++)
         {
@@ -44,6 +52,14 @@ public class Room
                 exitsEnabled[temp] = true;
             }
         }
+    }
+    public string getName()
+    {
+        return name;
+    }
+    public string getEnterRoom()
+    {
+        return enterRoom;
     }
     public bool getLeftExitEnabled()
     {
@@ -60,5 +76,10 @@ public class Room
     public bool getBackExitEnabled()
     {
         return exitsEnabled[3];
+    }
+
+    public string getEnterToOtherRoom()
+    {
+        return enterToOtherRoom;
     }
 }
