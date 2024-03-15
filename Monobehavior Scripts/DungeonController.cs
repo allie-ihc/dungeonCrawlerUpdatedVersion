@@ -1,38 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class DungeonController : MonoBehaviour
 {
-    public GameObject frontDoor;
+    /*public GameObject frontDoor;
     public GameObject backDoor;
     public GameObject leftDoor;
-    public GameObject rightDoor;
+    public GameObject rightDoor; */
     public GameObject frontBlocked;
     public GameObject backBlocked;
     public GameObject leftBlocked;
-    public GameObject rightBlocked;
+    public GameObject rightBlocked; 
     // Start is called before the first frame update
     void Start()
     {
-        Room r;
-        if (MySingleton.numRooms == 0)
+        Room theCurrentRoom = MySingleton.thePlayer.getCurrentRoom();
+        if (theCurrentRoom.hasExit("front"))
         {
-            r = new Room("room" + MySingleton.numRooms.ToString(), MySingleton.nextEnter, " ");
-            enableExits(r);
-            MySingleton.addRoom(r);
+          //  this.frontDoor.SetActive(true);
+            this.frontBlocked.SetActive(false);
+        }
+        else
+        {
+            this.frontBlocked.SetActive(true);
+        }
 
-        }
-        else if (MySingleton.loadRoom(MySingleton.rooms[MySingleton.currentRoom]) == null)
+        if (theCurrentRoom.hasExit("back"))
         {
-            r = new Room("room" + MySingleton.numRooms.ToString(), MySingleton.nextEnter, MySingleton.rooms[MySingleton.numRooms - 1].getName());
-            enableExits(r);
-            MySingleton.addRoom(r);
+          //  this.backDoor.SetActive(false);
+            this.backBlocked.SetActive(false);
         }
-        else if (MySingleton.loadRoom(MySingleton.rooms[MySingleton.currentRoom]) != null)
+        else
         {
-            r = MySingleton.loadRoom(MySingleton.rooms[MySingleton.currentRoom]);
-            enableExits(r);
+            this.backBlocked.SetActive(true);
+        }
+
+        if (theCurrentRoom.hasExit("left"))
+        {
+           // this.leftDoor.SetActive(false);
+            this.leftBlocked.SetActive(false);
+        }
+        else
+        {
+            this.leftBlocked.SetActive(true);
+        }
+
+        if (theCurrentRoom.hasExit("right"))
+        {
+          //  this.rightDoor.SetActive(false);
+            this.rightBlocked.SetActive(false);
+        }
+        else
+        {
+            this.rightBlocked.SetActive(true);
         }
 
 
@@ -40,7 +62,7 @@ public class DungeonController : MonoBehaviour
 
     private void enableExits(Room r)
     {
-        if (r.getLeftExitEnabled() == false)
+     /*   if (r.getLeftExitEnabled() == false)
         {
             leftDoor.SetActive(false);
             MySingleton.leftExitEnabled = false;
@@ -87,6 +109,6 @@ public class DungeonController : MonoBehaviour
             backDoor.SetActive(true);
             MySingleton.backExitEnabled = true;
             backBlocked.SetActive(false);
-        }
+        } */
     }
 }
