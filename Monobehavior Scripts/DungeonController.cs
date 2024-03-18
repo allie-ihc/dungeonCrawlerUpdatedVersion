@@ -12,7 +12,11 @@ public class DungeonController : MonoBehaviour
     public GameObject frontBlocked;
     public GameObject backBlocked;
     public GameObject leftBlocked;
-    public GameObject rightBlocked; 
+    public GameObject rightBlocked;
+    public GameObject frontPickUp;
+    public GameObject backPickUp;
+    public GameObject leftPickUp;   
+    public GameObject rightPickUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +61,22 @@ public class DungeonController : MonoBehaviour
             this.rightBlocked.SetActive(true);
         }
 
+        if(!theCurrentRoom.getPickUpCollected("front"))
+        {
+            frontPickUp.SetActive(true);
+        }
+        if (!theCurrentRoom.getPickUpCollected("back"))
+        {
+            backPickUp.SetActive(true);
+        }
+        if (!theCurrentRoom.getPickUpCollected("left"))
+        {
+            leftPickUp.SetActive(true);
+        }
+        if (!theCurrentRoom.getPickUpCollected("right"))
+        {
+            rightPickUp.SetActive(true);
+        }
 
     }
 

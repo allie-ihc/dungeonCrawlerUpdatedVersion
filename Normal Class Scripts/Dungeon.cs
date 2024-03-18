@@ -18,7 +18,10 @@ public class Dungeon
     {
         this.startRoom = r;
     }
-
+    public Room getCurrentRoom()
+    {
+        return currentRoom;
+    }
     public void addPlayer(Player thePlayer)
     {
         this.thePlayer = thePlayer;

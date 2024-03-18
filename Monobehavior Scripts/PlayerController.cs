@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.SceneManagement;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,7 +16,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     private bool amMoving = false;
     public bool amAtMiddleOfRoom = false;
+    public bool reachedMiddle = false;
     private string exitUsed;
+    public TextMeshProUGUI pointsDisplay;
     private void turnOffExits()
     {
         this.frontExit.gameObject.SetActive(false);
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        pointsDisplay.text = MySingleton.thePlayer.getPoints().ToString();
         this.turnOffExits();
 
         if (!MySingleton.currentDirection.Equals(" "))
@@ -70,6 +74,7 @@ public class PlayerController : MonoBehaviour
         {
             roomEnter.SetActive(false);
             turnOnExits();
+            reachedMiddle = true;
         }
         // MySingleton.currentDirection = " ";
     }
@@ -84,7 +89,37 @@ public class PlayerController : MonoBehaviour
         else if (other.CompareTag("middleOfRoom") && !MySingleton.currentDirection.Equals(" "))
         {
             this.amAtMiddleOfRoom = true;
+            this.reachedMiddle = true;
             turnOnExits();
+        }
+        else if (other.CompareTag("pickUp"))
+        {
+            other.gameObject.SetActive(false);
+            MySingleton.thePlayer.addPoint();
+            pointsDisplay.text = MySingleton.thePlayer.getPoints().ToString();
+            if (reachedMiddle)
+            {
+                MySingleton.theDungeon.getCurrentRoom().setPickUpCollected(MySingleton.currentDirection);
+            }
+            else
+            {
+                if(MySingleton.currentDirection.Equals("front"))
+                {
+                    MySingleton.theDungeon.getCurrentRoom().setPickUpCollected("back");
+                }
+                if (MySingleton.currentDirection.Equals("back"))
+                {
+                    MySingleton.theDungeon.getCurrentRoom().setPickUpCollected("front");
+                }
+                if (MySingleton.currentDirection.Equals("right"))
+                {
+                    MySingleton.theDungeon.getCurrentRoom().setPickUpCollected("left");
+                }
+                if (MySingleton.currentDirection.Equals("left"))
+                {
+                    MySingleton.theDungeon.getCurrentRoom().setPickUpCollected("right");
+                }
+            }
         }
     }
     // Update is called once per frame
