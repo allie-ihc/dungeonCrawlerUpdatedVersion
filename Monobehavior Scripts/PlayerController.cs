@@ -94,10 +94,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.CompareTag("pickUp"))
         {
-            other.gameObject.SetActive(false);
+            EditorSceneManager.LoadScene("Scene2");
+
+         /*   other.gameObject.SetActive(false);
             MySingleton.thePlayer.addPoint();
-            pointsDisplay.text = MySingleton.thePlayer.getPoints().ToString();
-            if (reachedMiddle)
+            pointsDisplay.text = MySingleton.thePlayer.getPoints().ToString(); */
+         /*   if (reachedMiddle)
             {
                 MySingleton.theDungeon.getCurrentRoom().setPickUpCollected(MySingleton.currentDirection);
             }
@@ -119,7 +121,7 @@ public class PlayerController : MonoBehaviour
                 {
                     MySingleton.theDungeon.getCurrentRoom().setPickUpCollected("right");
                 }
-            }
+            } */
         }
     }
     // Update is called once per frame
