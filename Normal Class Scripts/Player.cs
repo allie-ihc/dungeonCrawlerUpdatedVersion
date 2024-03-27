@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player 
+public class Player : Inhabitant
 {
-    private string name;
-    private Room currentRoom;
     private int points;
 
-    public Player(string name)
+    public Player(string name) : base(name)
     {
+        
         this.name = name;
         this.currentRoom = null;
     }
@@ -27,6 +26,7 @@ public class Player
     {
         return this.points;
     }
+
     public void addPoint()
     {
         points++;
