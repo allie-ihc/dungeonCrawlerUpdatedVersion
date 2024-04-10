@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : Inhabitant
 {
     private int points;
-
+    private int bonus;
     public Player(string name) : base(name)
     {
         
@@ -30,5 +30,17 @@ public class Player : Inhabitant
     public void addPoint()
     {
         points++;
+    }
+    public void resetStats()
+    {
+        this.hp = this.maxHP;
+    }
+    public void addBonus(int bonus)
+    {
+        this.bonus += bonus;
+    }
+    public int getBonus()
+    {
+        return bonus;
     }
 }
