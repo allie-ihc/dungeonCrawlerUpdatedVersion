@@ -8,7 +8,7 @@ using UnityEditor.SceneManagement;
 public class ShopController : MonoBehaviour
 {
     public GameObject shopItem;
-    public TextMeshProUGUI shopText;
+    public TextMeshProUGUI shopText, itemText;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +22,7 @@ public class ShopController : MonoBehaviour
         {
             shopItem.SetActive(false);
             MySingleton.thePlayer.addBonus(1);
+            MySingleton.thePlayer.subtractPoins(1);
             EditorSceneManager.LoadScene("Scene1");
         }
         if(Input.GetKeyUp(KeyCode.N))

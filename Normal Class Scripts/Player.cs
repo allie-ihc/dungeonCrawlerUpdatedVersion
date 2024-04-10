@@ -31,6 +31,10 @@ public class Player : Inhabitant
     {
         points++;
     }
+    public void subtractPoins(int num)
+    {
+        points -= num;
+    }
     public void resetStats()
     {
         this.hp = this.maxHP;
