@@ -168,7 +168,10 @@ public class PlayerController : MonoBehaviour
 
             this.amAtMiddleOfRoom = false;
         }
-
+        if(Input.GetKeyUp(KeyCode.Escape))
+        {
+           EditorSceneManager.LoadScene("ShopScene");
+        }
         if (MySingleton.currentDirection.Equals("front"))
         {
             this.gameObject.transform.position = Vector3.MoveTowards(this.gameObject.transform.position, this.frontExit.transform.position, this.speed * Time.deltaTime);
